@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Todo from './components/Todo';
 import TodoForm from './components/TodoForm';
@@ -10,29 +10,15 @@ import Filter from './components/Filter';
 
 
 function App() {
-  const [todos, setTodos] = useState([
-    // {
-    //   id: 1,
-    //   text: "Criar funcionalidades",
-    //   category: "Trabalho",
-    //   isCompleted: false,
+  const todoStorage = localStorage.getItem('todo');
 
-    // },
-    // {
-    //   id: 2,
-    //   text: "Ir para a academia",
-    //   category: "Pessoal",
-    //   isCompleted: false,
+  const [todos, setTodos] = useState(todoStorage?JSON.parse(todoStorage):[]);
 
-    // },
-    // {
-    //   id: 3,
-    //   text: "Estudar React",
-    //   category: "Estudos",
-    //   isCompleted: false,
+  useEffect(()=>{
+    localStorage.setItem('todo', JSON.stringify(todos));
+  }, [todos]);
 
-    // }
-  ]);
+
 
   const [search, setSearch] = useState("");
 
@@ -102,6 +88,7 @@ function App() {
     </div>
    
   )
+  
 }
 
 export default App
